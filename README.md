@@ -117,41 +117,6 @@ src/
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
 
-## 🎨 Customization
-
-### Adding New Flashcard Generation Strategies
-
-Edit `src/utils/flashcardGenerator.ts` to add new analysis patterns:
-
-```typescript
-function newStrategy(text: string): Flashcard[] {
-  // Your custom logic here
-  return cards
-}
-```
-
-### Styling
-
-The app uses Tailwind CSS with custom components defined in `src/index.css`. Modify the `@layer components` section to customize the design.
-
-## 📱 Browser Support
-
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 License
-
-This project is open source and available under the MIT License.
 
 ## 🐛 Known Issues
 
@@ -167,10 +132,5 @@ This project is open source and available under the MIT License.
 - [ ] Collaborative flashcard sharing
 - [ ] Mobile app version
 - [ ] AI-powered difficulty assessment
-- [ ] Bulk card operations (select multiple cards)
 - [ ] Card templates and themes
 - [ ] Study statistics and progress tracking
-
----
-
-**Made with ❤️ for better learning** 
