@@ -172,3 +172,5 @@ This project is open source and available under the MIT License.
 - [ ] Study statistics and progress tracking
 
 ---
+
+**Made with ❤️ for better learning** 
