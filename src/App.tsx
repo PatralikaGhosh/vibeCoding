@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BookOpen, FileText, Upload } from 'lucide-react'
+import { BookOpen, Upload } from 'lucide-react'
 import Navigation from './components/Navigation'
 import FlashcardDecks from './components/FlashcardDecks'
 import UploadedNotes from './components/UploadedNotes'

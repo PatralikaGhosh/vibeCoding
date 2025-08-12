@@ -10,11 +10,12 @@ async function loadNLPLibraries() {
   try {
     const { default: naturalModule } = await import('natural')
     const { default: nlpModule } = await import('compromise')
-    const { extract } = await import('keyword-extractor')
+    const keywordExtractor = await import('keyword-extractor')
+    const extract = keywordExtractor.default || keywordExtractor
     
     natural = naturalModule
     nlp = nlpModule
-    keyword = { extract }
+    keyword = extract
     
     console.log('NLP libraries loaded successfully')
     return true
@@ -25,9 +26,8 @@ async function loadNLPLibraries() {
 }
 
 // Try to load libraries immediately
-let nlpLoaded = false
-loadNLPLibraries().then(success => {
-  nlpLoaded = success
+loadNLPLibraries().then(() => {
+  // Libraries loaded
 })
 
 /**
@@ -75,7 +75,7 @@ function analyzeNoteContentWithAdvancedNLP(content: string): Flashcard[] {
   const cards: Flashcard[] = []
   
   // Pre-process text with NLP
-  const processedText = preprocessTextWithNLP(content)
+  preprocessTextWithNLP(content)
   
   // Extract keyphrases using advanced NLP techniques
   const keyphrases = extractKeyphrasesWithNLP(content)
@@ -344,7 +344,7 @@ function extractKeywordsWithFrequency(text: string): KeyPhrase[] {
   })
   
   Object.entries(wordFreq)
-    .filter(([word, freq]) => freq > 1)
+    .filter(([_word, freq]) => freq > 1)
     .sort(([,a], [,b]) => b - a)
     .slice(0, 15)
     .forEach(([word, freq]) => {
@@ -578,7 +578,6 @@ function extractDefinitionsWithAdvancedNLP(text: string, keyphrases: KeyPhrase[]
   
   sentences.forEach((sentence: any) => {
     const sentenceText = sentence.text()
-    const sentenceDoc = nlp(sentenceText)
     
     // Check if sentence contains definition patterns
     const definitionPatterns = [
@@ -660,7 +659,7 @@ function extractConceptsWithAdvancedNLP(text: string, keyphrases: KeyPhrase[]): 
   return cards
 }
 
-function extractNamedEntityCards(text: string, keyphrases: KeyPhrase[]): Flashcard[] {
+function extractNamedEntityCards(text: string, _keyphrases: KeyPhrase[]): Flashcard[] {
   const cards: Flashcard[] = []
   const doc = nlp(text)
   
@@ -692,7 +691,7 @@ function extractNamedEntityCards(text: string, keyphrases: KeyPhrase[]): Flashca
   return cards
 }
 
-function extractProcessCardsWithNLP(text: string, keyphrases: KeyPhrase[]): Flashcard[] {
+function extractProcessCardsWithNLP(text: string, _keyphrases: KeyPhrase[]): Flashcard[] {
   const cards: Flashcard[] = []
   const doc = nlp(text)
   
@@ -737,7 +736,7 @@ function extractProcessCardsWithNLP(text: string, keyphrases: KeyPhrase[]): Flas
   return cards
 }
 
-function generateAdvancedKeyphraseCards(content: string, keyphrases: KeyPhrase[]): Flashcard[] {
+function generateAdvancedKeyphraseCards(_content: string, keyphrases: KeyPhrase[]): Flashcard[] {
   const cards: Flashcard[] = []
   
   // Generate cards for top keyphrases with rich context
@@ -774,7 +773,7 @@ function determineQuestionType(keyphrase: KeyPhrase): string {
   }
 }
 
-function extractRelationshipCards(content: string, keyphrases: KeyPhrase[]): Flashcard[] {
+function extractRelationshipCards(_content: string, _keyphrases: KeyPhrase[]): Flashcard[] {
   const cards: Flashcard[] = []
   
   if (!nlp) {
@@ -782,7 +781,7 @@ function extractRelationshipCards(content: string, keyphrases: KeyPhrase[]): Fla
     return []
   }
   
-  const doc = nlp(content)
+  const doc = nlp(_content)
   
   // Find relationships between concepts
   const relationships = doc.match('#Noun+ (is|are|has|have|contains|includes|requires|uses) #Noun+')
@@ -793,7 +792,7 @@ function extractRelationshipCards(content: string, keyphrases: KeyPhrase[]): Fla
       cards.push({
         id: generateId(),
         question: `What is the relationship described in: "${relText}"?`,
-        answer: extractContextForPhrase(relText, content)
+        answer: extractContextForPhrase(relText, _content)
       })
     }
   })
@@ -914,7 +913,7 @@ function extractConceptsEnhanced(text: string, keyphrases: KeyPhrase[]): Flashca
   return cards
 }
 
-function extractProcessCards(text: string, keyphrases: KeyPhrase[]): Flashcard[] {
+function extractProcessCards(text: string, _keyphrases: KeyPhrase[]): Flashcard[] {
   const cards: Flashcard[] = []
   
   // Look for process indicators
@@ -973,7 +972,7 @@ function generateKeyphraseCards(content: string, keyphrases: KeyPhrase[]): Flash
   return cards
 }
 
-function extractListItems(text: string, sectionIndex: number): Flashcard[] {
+function extractListItems(text: string, _sectionIndex: number): Flashcard[] {
   const cards: Flashcard[] = []
   
   // Pattern: Look for numbered or bulleted lists
@@ -1017,7 +1016,7 @@ function createGeneralCards(content: string): Flashcard[] {
   // Split content into chunks and create general Q&A
   const chunks = content.split(/\n\s*\n/).filter(chunk => chunk.trim().length > 50)
   
-  chunks.slice(0, 5).forEach((chunk, index) => {
+  chunks.slice(0, 5).forEach((chunk, _index) => {
     const trimmed = chunk.trim()
     const firstSentence = trimmed.split(/[.!?]/)[0] + '.'
     

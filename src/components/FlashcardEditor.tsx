@@ -10,7 +10,7 @@ interface FlashcardEditorProps {
 
 export default function FlashcardEditor({ deck, onSave, onBack }: FlashcardEditorProps) {
   const [editedDeck, setEditedDeck] = useState<FlashcardDeck>({ ...deck })
-  const [editingCard, setEditingCard] = useState<string | null>(null)
+  const [_editingCard, setEditingCard] = useState<string | null>(null)
   const [hasChanges, setHasChanges] = useState(false)
 
   const generateId = (): string => {

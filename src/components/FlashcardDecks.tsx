@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BookOpen, Calendar, FileText, Plus, Eye, Trash2, Edit3 } from 'lucide-react'
+import { BookOpen, Calendar, FileText, Eye, Trash2, Edit3 } from 'lucide-react'
 import { FlashcardDeck, Note } from '../types'
 import FlashcardViewer from './FlashcardViewer'
 import FlashcardEditor from './FlashcardEditor'
@@ -12,7 +12,7 @@ interface FlashcardDecksProps {
   onDeckUpdated: (updatedDeck: FlashcardDeck) => void
 }
 
-export default function FlashcardDecks({ decks, notes, onDeckCreated, onDeckDeleted, onDeckUpdated }: FlashcardDecksProps) {
+export default function FlashcardDecks({ decks, notes, onDeckCreated: _onDeckCreated, onDeckDeleted, onDeckUpdated }: FlashcardDecksProps) {
   const [selectedDeck, setSelectedDeck] = useState<FlashcardDeck | null>(null)
   const [editingDeck, setEditingDeck] = useState<FlashcardDeck | null>(null)
 
